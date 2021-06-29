@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #messages {
+            border: 1px solid black;
+            height: 90vh;
+        }
+
+        #messages p {
+            margin: 0;
+            padding: 10px;
+        }
+
+        #messages :nth-child(odd) {
+            background-color: grey;
+        }
+
+        form {
+            display: flex;
+        }
+
+        #name {
+            flex: 1;
+            padding: 10px;
+        }
+
+        #message {
+            flex: 5;
+            padding: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="messages">
+
+</div>
+<form>
+    <input type="text" id="name" placeholder="Entrez votre Nom">
+    <input type="text" id="message" placeholder="Entrez votre Message">
+    <button> Envoyer</button>
+</form>
+<!-- on va chercher socket.io.js -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    //on se connect serveur socket
+    const socket = io();
+    window.onload = () => {
+        //on ecoute l'evenement
+        document.querySelector("form").addEventListener("submit", (e) => {
+            //on empeche l'envoie du formulaire
+            e.preventDefault();
+            const name = document.querySelector("#name")
+            const message = document.querySelector("#message")
+
+    socket.emit("chat_message", { name: name.value, message:message.value})
+            document.querySelector("#message").value = "";
+        });
+        //on ecoute egalement received_message
+        socket.on("received_message", (msg) => {
+           document.querySelector("#messages").innerHTML += `<p>${msg.name} dit: ${msg.message}</p>`;
+
+        })
+    }
+</script>
+</body>
+</html>

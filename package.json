@@ -1,0 +1,22 @@
+{
+  "name": "chat_socket.io",
+  "version": "1.0.0",
+  "description": "Chat réalise avec socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "socket",
+    "socket.io",
+    "node",
+    "nodejs"
+  ],
+  "author": "wiss",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.1.2"
+  }
+}
